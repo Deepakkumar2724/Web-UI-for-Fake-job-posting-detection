@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Scam Detector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-image: url('https://th.bing.com/th/id/OIP.iTyAvZCi-kvm9mDj__1-QgAAAA?cb=iwc2&w=474&h=258&rs=1&pid=ImgDetMain'); /* Change this URL as needed */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: contain;
+	background-size:100%;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #00e5ff;
+            margin-bottom: 25px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 160px;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #00e5ff;
+            background: #f5f0f0;
+            color: #151515;
+            resize: none;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00e5ff;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #00e5ff;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #00bcd4;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background-color: #80deea;
+            cursor: not-allowed;
+        }
+
+        #result {
+            margin-top: 25px;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+            text-align: center;
+            background-color: #263238;
+            color: #fff;
+        }
+
+        .real {
+            background-color: #2e7d32 !important;
+            color: #e8f5e9 !important;
+        }
+
+        .fake {
+            background-color: #b71c1c !important;
+            color: #ffebee !important;
+        }
+
+        .error {
+            background-color: #ff6f00 !important;
+            color: #fff3e0 !important;
+        }
+        .examples {
+            margin-top: 20px;
+        }
+        .example-btn {
+            background: #ecf0f1;
+            color: #2c3e50;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Job Scam Detector</h1>
+        <p>Enter a job description to check if it might be fraudulent:</p>
+        
+        <form method="POST">
+            <textarea name="job_text" placeholder="Paste job description here..." required></textarea>
+            <button type="submit">Analyze Job</button>
+        </form>
+        
+        {% if prediction %}
+        <div class="result {% if prediction == 'Fraudulent' %}fraud{% else %}legit{% endif %}">
+            Result: {{ prediction }}
+        </div>
+        {% endif %}
+        
+        <div class="examples">
+            <h3>Try these examples:</h3>
+            <button class="example-btn" onclick="loadExample('legit')">Legitimate Job</button>
+            <button class="example-btn" onclick="loadExample('fraud')">Fraudulent Job</button>
+        </div>
+    </div>
+
+    <script>
+        const examples = {
+            legit: "Software Engineer – Google\n\nJoin Google's cloud infrastructure team in Sunnyvale, CA.\nExperience with C++, Python, and distributed systems required.\nBase salary: $150K + bonus + equity.\nApply at: careers.google.com",
+            
+            fraud: "URGENT HIRING! WORK FROM HOME - $95 PER HOUR!\n\nNo experience needed! Immediate hiring!\nRequirements:\n- Must have computer\n- No background check\n\nHow to Apply:\nSend personal information to hiring@fastjobz.com\n\nPay $35 registration fee to start!"
+        };
+
+        function loadExample(type) {
+            document.querySelector('textarea').value = examples[type];
+        }
+    </script>
+</body>
+</html>
